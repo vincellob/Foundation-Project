@@ -10,9 +10,10 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
+    List<Ticket> findByEmployee_Username(String username);
 
-    List<Ticket> findByStatus(Ticket.Status status);
+    // Custom query to find all tickets by status (PENDING, APPROVED, DENIED)
+    List<Ticket> findByStatus(String status);
 
- 
-    List<Ticket> findByEmployee(User employee);
+    
 }

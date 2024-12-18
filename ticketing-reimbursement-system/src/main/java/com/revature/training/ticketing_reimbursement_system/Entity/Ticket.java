@@ -5,52 +5,54 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="ticket")
 public class Ticket {
- 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer ticketId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false)
-    private Double amount;
+    private String title;
 
     @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private Double amount;
+
+    @Column(nullable = false)
+    private String status = "PENDING"; // Default status
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "employee_id", nullable = false)
     private User employee;
 
-    
+    // Default constructor
     public Ticket() {
     }
 
- 
-    public Ticket(Double amount, String description, User employee) {
-        this.amount = amount;
+    // Constructor with parameters
+    public Ticket(String title, String description, Double amount, User employee) {
+        this.title = title;
         this.description = description;
-        this.employee = employee;
-        this.status = Status.PENDING; 
-    }
-
-
-    public Integer getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(Integer ticketId) {
-        this.ticketId = ticketId;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
         this.amount = amount;
+        this.employee = employee;
+    }
+
+    // Getters and Setters
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -61,11 +63,19 @@ public class Ticket {
         this.description = description;
     }
 
-    public Status getStatus() {
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -76,13 +86,5 @@ public class Ticket {
     public void setEmployee(User employee) {
         this.employee = employee;
     }
-
-
-    public enum Status {
-        PENDING,
-        APPROVED,
-        DENIED
-    }
 }
-
 
