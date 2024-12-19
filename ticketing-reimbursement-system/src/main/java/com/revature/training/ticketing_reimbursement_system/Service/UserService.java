@@ -5,7 +5,6 @@ import com.revature.training.ticketing_reimbursement_system.Repository.UserRepos
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -14,7 +13,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    //@Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

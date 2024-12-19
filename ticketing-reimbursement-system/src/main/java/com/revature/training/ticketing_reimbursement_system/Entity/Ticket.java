@@ -1,58 +1,50 @@
 package com.revature.training.ticketing_reimbursement_system.Entity;
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 
 @Entity
 @Table(name="ticket")
 public class Ticket {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ticket_id")
+    private Integer ticketId;
 
     @Column(nullable = false)
-    private String title;
+    private BigDecimal amount;
 
     @Column(nullable = false)
     private String description;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Double amount;
+    private Status status = Status.PENDING;
 
-    @Column(nullable = false)
-    private String status = "PENDING"; // Default status
-
-    @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     private User employee;
 
-    // Default constructor
-    public Ticket() {
+    public enum Status {
+        PENDING, APPROVED, DENIED
     }
 
-    // Constructor with parameters
-    public Ticket(String title, String description, Double amount, User employee) {
-        this.title = title;
-        this.description = description;
+    public Integer getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(Integer ticketId) {
+        this.ticketId = ticketId;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
-        this.employee = employee;
-    }
-
-    // Getters and Setters
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
@@ -63,19 +55,11 @@ public class Ticket {
         this.description = description;
     }
 
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -87,4 +71,5 @@ public class Ticket {
         this.employee = employee;
     }
 }
+
 

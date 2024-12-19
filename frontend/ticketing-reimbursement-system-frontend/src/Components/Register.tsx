@@ -10,7 +10,7 @@ const Register = () => {
     const handleRegister = (e: React.FormEvent) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            setMessage("Passwords do not match.");
+            setMessage("Passwords must match.");
             return;
         }
 
@@ -19,7 +19,6 @@ const Register = () => {
             password: password
         };
 
-        // Send a POST request to register the user
         axios
             .post("http://localhost:8080/api/register", user)
             .then((response) => {

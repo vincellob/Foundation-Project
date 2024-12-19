@@ -19,17 +19,16 @@ const Login = () => {
 
       const user = response.data;
 
-      // Redirect based on user role
       if (user.role === "EMPLOYEE") {
         navigate("/employee");
       } else if (user.role === "MANAGER") {
         navigate("/manager");
       } else {
-        setMessage("Unexpected role received from the server.");
+        setMessage("Error.");
       }
     } catch (error: any) {
       setMessage(
-        error.response?.data || "Login failed. Please check your credentials."
+        error.response?.data || "Login failed. Invalid credentials."
       );
     }
   };
