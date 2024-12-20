@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const EmployeePage: React.FC = () => {
   const [amount, setAmount] = useState<string>('');
@@ -7,6 +8,15 @@ const EmployeePage: React.FC = () => {
   const [message, setMessage] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [tickets, setTickets] = useState<any[]>([]);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('authToken');
+    if (!isLoggedIn) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     fetchTickets();
@@ -57,9 +67,30 @@ const EmployeePage: React.FC = () => {
     }
   };
 
+  const handleSignOut = () => {
+    localStorage.clear();
+    navigate('/');
+  };
+
   return (
     <div style={{ padding: '20px' }}>
       <h1>Employee Dashboard</h1>
+      <button
+        onClick={handleSignOut}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          padding: '10px',
+          backgroundColor: '#FF5733',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        Sign Out
+      </button>
 
       <h2>Submit a Ticket</h2>
       <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
@@ -127,8 +158,8 @@ const EmployeePage: React.FC = () => {
           {message}
         </p>
       )}
-      
-      <h2>All Previous Tickets</h2>
+
+      <h2>View Previous Tickets</h2>
       {tickets.length === 0 ? (
         <p>No previous tickets available.</p>
       ) : (

@@ -20,8 +20,10 @@ const Login = () => {
       const user = response.data;
 
       if (user.role === "EMPLOYEE") {
+        localStorage.setItem('authToken', response.data.authToken);
         navigate("/employee");
       } else if (user.role === "MANAGER") {
+        localStorage.setItem('authToken', response.data.authToken);
         navigate("/manager");
       } else {
         setMessage("Error.");
@@ -34,33 +36,94 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column",
+      }}
+    >
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Username: </label>
+      <form
+        onSubmit={handleLogin}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "15px",
+          width: "300px",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+          <label>Username:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            style={{
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              width: "100%",
+            }}
           />
         </div>
-        <div>
-          <label>Password: </label>
+        <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+          <label>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={{
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              width: "100%",
+            }}
           />
         </div>
-        <button type="submit">Login</button>
-        <button type="button" onClick={() => navigate("/register")}>
-          Register
-        </button>
+        <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+          <button
+            type="submit"
+            style={{
+              padding: "10px 15px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              width: "48%",
+            }}
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+            style={{
+              padding: "10px 15px",
+              backgroundColor: "#008CBA",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              width: "48%",
+            }}
+          >
+            Register
+          </button>
+        </div>
       </form>
-      {message && <p>{message}</p>}
+      {message && (
+        <p style={{ marginTop: "15px", color: "red", textAlign: "center" }}>
+          {message}
+        </p>
+      )}
     </div>
   );
 };
+
 
 export default Login;
